@@ -13,6 +13,7 @@ import { currencies } from "./src/constants/currencies";
 import { Input } from "./src/components/Input";
 import { ResultCard } from "./src/components/ResultCard";
 import { exchangeRateApi } from "./src/services/api";
+import { convertCurrency } from "./src/ultils/convertCurrency";
 import { useState } from "react";
 
 export default function App() {
@@ -26,7 +27,8 @@ export default function App() {
   async function fetchExchangeRate() {
     const data = await exchangeRateApi(fromCurrency);
     const rate = data.rates[toCurrency];
-    console.log(rate * amount);
+    const convertedAmount = convertCurrency(amount, rate);
+    setResult(convertedAmount);
   }
   return (
     <KeyboardAvoidingView
