@@ -27,13 +27,15 @@ export default function App() {
   async function fetchExchangeRate() {
     const data = await exchangeRateApi(fromCurrency);
     const rate = data.rates[toCurrency];
+    setExchangeRate(rate);
+
     const convertedAmount = convertCurrency(amount, rate);
     setResult(convertedAmount);
   }
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      // behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
@@ -85,7 +87,13 @@ export default function App() {
           >
             <Text style={styles.swappButtunText}>Converter</Text>
           </TouchableOpacity>
-          <ResultCard />
+          <ResultCard
+            exchangeRate={exchangeRate}
+            result={result}
+            fromCurrency={fromCurrency}
+            toCurrency={toCurrency}
+            currencies={currencies}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
